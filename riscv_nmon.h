@@ -142,11 +142,41 @@ _nmon_outc_a0:
 
 _nmon_outs:
 
+#ifdef HW_LB_BUG
+	/* HACK: cpu core does not support byte read */
+	lw	t3, 0(a1)
+
+	andi	a0, t3, 0xff
+	beqz	a0, _nmon_jr_ra_exit
+
+	debug_ll_outc_a0
+
+	srli	a0, t3, 8
+	andi	a0, a0, 0xff
+	beqz	a0, _nmon_jr_ra_exit
+
+	debug_ll_outc_a0
+
+	srli	a0, t3, 16
+	andi	a0, a0, 0xff
+	beqz	a0, _nmon_jr_ra_exit
+
+	debug_ll_outc_a0
+
+	srli	a0, t3, 24
+	andi	a0, a0, 0xff
+	beqz	a0, _nmon_jr_ra_exit
+
+	debug_ll_outc_a0
+
+	addi	a1, a1, 4
+#else /* HW_LB_BUG */
 	lb	a0, 0(a1)
 	addi	a1, a1, 1
 	beqz	a0, _nmon_jr_ra_exit
 
 	debug_ll_outc_a0
+#endif /* HW_LB_BUG */
 
 	j	_nmon_outs
 
@@ -206,16 +236,32 @@ _get_hex_digit:
 _nmon_jr_ra_exit:
 	jr	ra
 
+#ifdef HW_LB_BUG
+	/*
+	 * HACK: cpu core does not support byte read
+	 * so we have to align messages data.
+	 */
+	.align 2
+#endif /* HW_LB_BUG */
 msg_prompt:
 	.asciz "\r\nnmon> "
 
+#ifdef HW_LB_BUG
+	.align 2
+#endif /* HW_LB_BUG */
 msg_nl:
 	.asciz "\r\n"
 
+#ifdef HW_LB_BUG
+	.align 2
+#endif /* HW_LB_BUG */
 msg_bsp:
 	.asciz "\b \b"
 
 #ifdef CONFIG_NMON_HELP
+#ifdef HW_LB_BUG
+	.align 4
+#endif /* HW_LB_BUG */
 msg_nmon_help:
 	.ascii "\r\n\r\nnmon commands:\r\n"
 	.ascii " q - quit\r\n"
