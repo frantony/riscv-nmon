@@ -1,3 +1,4 @@
 *.bin
 *.txt
 nmon_picorv32-wb-soc_10MHz_9600
+nmon_vscale-wb-soc_10MHz_9600
