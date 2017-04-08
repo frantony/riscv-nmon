@@ -17,7 +17,7 @@ nmon_vscale-wb-soc_10MHz_9600: \
 	debug_ll_ns16550.h \
 	riscv_nmon.h
 
-%: %.S
+%: %.S riscv_nmon.lds
 	$(CC) -nostdlib -nostartfiles -Triscv_nmon.lds -g -o $@ $<
 
 %.bin: %
