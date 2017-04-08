@@ -20,6 +20,7 @@ nmon_vscale-wb-soc_10MHz_9600: \
 %: %.S riscv_nmon.lds
 	$(CC) -nostdlib -nostartfiles -Triscv_nmon.lds -g -o $@ $<
 
+.PRECIOUS: %.bin
 %.bin: %
 	$(OBJCOPY) -O binary $< $@
 
