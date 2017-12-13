@@ -4,10 +4,10 @@ CC=$(CROSS_COMPILE)gcc
 OBJCOPY=$(CROSS_COMPILE)objcopy
 
 all: \
-	nmon_picorv32-wb-soc_10MHz_9600.txt
+	nmon_picorv32-wb-soc_24MHz_115200.txt
 
-nmon_picorv32-wb-soc_10MHz_9600: \
-	nmon_picorv32-wb-soc_10MHz_9600.S \
+nmon_picorv32-wb-soc_24MHz_115200: \
+	nmon_picorv32-wb-soc_24MHz_115200.S \
 	debug_ll_ns16550.h \
 	riscv_nmon.h
 
@@ -29,9 +29,9 @@ hello_picorv32-wb-soc_10MHz_9600.nmon: hello_picorv32-wb-soc_10MHz_9600.bin
 
 .PHONY: clean
 clean:
-	rm -f nmon_picorv32-wb-soc_10MHz_9600 \
-		nmon_picorv32-wb-soc_10MHz_9600.bin \
-		nmon_picorv32-wb-soc_10MHz_9600.txt
+	rm -f nmon_picorv32-wb-soc_24MHz_115200 \
+		nmon_picorv32-wb-soc_24MHz_115200.bin \
+		nmon_picorv32-wb-soc_24MHz_115200.txt
 	rm -f hello_picorv32-wb-soc_10MHz_9600 \
 		hello_picorv32-wb-soc_10MHz_9600.bin \
 		hello_picorv32-wb-soc_10MHz_9600.nmon
